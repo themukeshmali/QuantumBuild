@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your Quantum Build profile and view order history.">
+    <title>My Profile — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="cart.html" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span class="current">My Profile</span>
+            </div>
+            <h1>My <span class="text-gradient">Profile</span></h1>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <section class="section profile-section">
+        <div class="container">
+            <div class="profile-layout">
+                <!-- Sidebar -->
+                <aside class="profile-sidebar">
+                    <div class="profile-avatar-section">
+                        <div class="profile-avatar" id="profileAvatar">U</div>
+                        <div class="profile-name" id="profileName">User</div>
+                        <div class="profile-email" id="profileEmail">user@example.com</div>
+                        <span class="profile-badge" id="profileBadge" style="display:none;"></span>
+                    </div>
+                    <div class="profile-nav">
+                        <button class="profile-nav-item active" data-tab="profile">👤 Profile</button>
+                        <button class="profile-nav-item" data-tab="orders">📦 Orders</button>
+                    </div>
+                </aside>
+
+                <!-- Panels -->
+                <div class="profile-content">
+                    <!-- Profile Edit Panel -->
+                    <div class="profile-panel active" id="panel-profile">
+                        <div class="profile-panel-header">
+                            <h2>Edit <span class="text-gradient">Profile</span></h2>
+                            <p>Update your account information</p>
+                        </div>
+                        <form class="profile-form" id="profileForm">
+                            <div class="form-group">
+                                <label class="form-label" for="editName">Name</label>
+                                <input type="text" id="editName" class="form-input" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="editEmail">Email</label>
+                                <input type="email" id="editEmail" class="form-input" placeholder="your@email.com"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="editPassword">New Password (optional)</label>
+                                <input type="password" id="editPassword" class="form-input"
+                                    placeholder="Leave blank to keep current">
+                            </div>
+                            <button type="submit" class="btn-auth">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- Orders Panel -->
+                    <div class="profile-panel" id="panel-orders">
+                        <div class="profile-panel-header">
+                            <h2>My <span class="text-gradient">Orders</span></h2>
+                            <p>Track and manage your orders</p>
+                        </div>
+                        <div class="orders-list" id="ordersList">
+                            <div class="orders-empty">
+                                <div class="orders-empty-icon">⏳</div>
+                                <p>Loading orders...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops engineered for power beyond limits.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+
+</html>

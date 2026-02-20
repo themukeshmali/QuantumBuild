@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Quantum Build — Premium gaming desktops built for power beyond limits. Shop custom gaming PCs with RTX 4090, liquid cooling, and full RGB.">
+    <title>Quantum Build — Power Beyond Limits</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="active">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <div class="hero-particles" id="heroParticles"></div>
+            <div class="hero-gradient"></div>
+        </div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="hero-badge reveal">⚡ Next-Gen Gaming Machines</div>
+                <h1 class="reveal reveal-delay-1">
+                    Power<br>
+                    <span class="text-gradient">Beyond Limits</span>
+                </h1>
+                <p class="hero-subtitle reveal reveal-delay-2">
+                    Quantum Build crafts the world's most powerful gaming desktops — engineered for gamers who refuse to
+                    compromise on performance, aesthetics, or dominance.
+                </p>
+                <div class="hero-buttons reveal reveal-delay-3">
+                    <a href="pcs.html" class="btn btn-primary btn-lg">Explore Gaming PCs</a>
+                    <a href="about.html" class="btn btn-secondary btn-lg">Our Story</a>
+                </div>
+                <div class="hero-stats reveal reveal-delay-4">
+                    <div class="hero-stat">
+                        <span class="stat-number" data-count="500">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-label">FPS Ready</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number" data-count="4090">0</span>
+                        <span class="stat-label">RTX Series</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number" data-count="50">0</span><span class="stat-suffix">K+</span>
+                        <span class="stat-label">Gamers Trust Us</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual reveal-right">
+                <div class="hero-pc-showcase">
+                    <div class="pc-glow"></div>
+                    <div class="pc-tower">
+                        <div class="pc-panel">
+                            <div class="rgb-strip rgb-strip-1"></div>
+                            <div class="rgb-strip rgb-strip-2"></div>
+                            <div class="rgb-strip rgb-strip-3"></div>
+                            <div class="pc-fan">
+                                <div class="fan-blade"></div>
+                            </div>
+                            <div class="pc-fan pc-fan-2">
+                                <div class="fan-blade"></div>
+                            </div>
+                            <div class="pc-fan pc-fan-3">
+                                <div class="fan-blade"></div>
+                            </div>
+                            <div class="pc-gpu">
+                                <span>RTX 4090</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Featured PCs Section -->
+    <section class="section featured-section" id="featured">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Featured <span class="text-gradient">Builds</span></h2>
+                <div class="accent-line"></div>
+                <p>Handpicked gaming powerhouses engineered for maximum performance</p>
+            </div>
+            <div class="products-grid" id="featuredGrid">
+                <!-- Populated by JS -->
+            </div>
+            <div class="text-center" style="margin-top: 50px;">
+                <a href="pcs.html" class="btn btn-secondary reveal">View All Gaming PCs →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Highlights -->
+    <section class="section performance-section">
+        <div class="performance-bg"></div>
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Engineered For <span class="text-gradient">Dominance</span></h2>
+                <div class="accent-line"></div>
+                <p>Every Quantum Build machine is tuned for peak gaming performance</p>
+            </div>
+            <div class="perf-grid">
+                <div class="perf-card reveal reveal-delay-1">
+                    <div class="perf-icon">🔥</div>
+                    <div class="perf-value"><span class="stat-number" data-count="240">0</span> FPS</div>
+                    <div class="perf-label">Fortnite @ 1440p</div>
+                    <div class="perf-bar">
+                        <div class="perf-bar-fill" data-width="95"></div>
+                    </div>
+                </div>
+                <div class="perf-card reveal reveal-delay-2">
+                    <div class="perf-icon">⚡</div>
+                    <div class="perf-value"><span class="stat-number" data-count="120">0</span> FPS</div>
+                    <div class="perf-label">Cyberpunk 2077 @ 4K</div>
+                    <div class="perf-bar">
+                        <div class="perf-bar-fill" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="perf-card reveal reveal-delay-3">
+                    <div class="perf-icon">🎯</div>
+                    <div class="perf-value"><span class="stat-number" data-count="500">0</span> FPS</div>
+                    <div class="perf-label">Valorant @ 1080p</div>
+                    <div class="perf-bar">
+                        <div class="perf-bar-fill" data-width="100"></div>
+                    </div>
+                </div>
+                <div class="perf-card reveal reveal-delay-4">
+                    <div class="perf-icon">🌡️</div>
+                    <div class="perf-value"><span class="stat-number" data-count="35">0</span>°C</div>
+                    <div class="perf-label">Idle Temps (Liquid Cooled)</div>
+                    <div class="perf-bar">
+                        <div class="perf-bar-fill" data-width="35"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Quantum Build -->
+    <section class="section why-section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Why <span class="text-gradient">Quantum Build</span></h2>
+                <div class="accent-line"></div>
+                <p>We don't just build PCs — we engineer gaming experiences</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-card reveal reveal-delay-1">
+                    <div class="why-icon-wrap">
+                        <div class="why-icon">🚀</div>
+                    </div>
+                    <h3>Raw Performance</h3>
+                    <p>Latest Intel & AMD processors paired with NVIDIA RTX 40-series GPUs deliver uncompromising frame
+                        rates in every title.</p>
+                </div>
+                <div class="why-card reveal reveal-delay-2">
+                    <div class="why-icon-wrap">
+                        <div class="why-icon">❄️</div>
+                    </div>
+                    <h3>Advanced Cooling</h3>
+                    <p>360mm AIO liquid cooling and optimized airflow keep your system whisper-quiet even under maximum
+                        load.</p>
+                </div>
+                <div class="why-card reveal reveal-delay-3">
+                    <div class="why-icon-wrap">
+                        <div class="why-icon">🌈</div>
+                    </div>
+                    <h3>RGB Ecosystem</h3>
+                    <p>Fully synchronized RGB illumination across all components creates a stunning visual experience
+                        that matches your style.</p>
+                </div>
+                <div class="why-card reveal reveal-delay-4">
+                    <div class="why-icon-wrap">
+                        <div class="why-icon">🛡️</div>
+                    </div>
+                    <h3>Premium Support</h3>
+                    <p>24/7 expert support, 3-year warranty, and lifetime technical assistance — we're with you every
+                        step of the way.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RGB Showcase Banner -->
+    <section class="rgb-showcase">
+        <div class="rgb-bg">
+            <div class="rgb-line rgb-line-1"></div>
+            <div class="rgb-line rgb-line-2"></div>
+            <div class="rgb-line rgb-line-3"></div>
+        </div>
+        <div class="container rgb-content reveal">
+            <h2>Immerse In <span class="text-gradient">RGB</span></h2>
+            <p>Full spectrum addressable RGB across every component — synchronized, customizable, and breathtaking.</p>
+            <a href="pcs.html" class="btn btn-neon">Explore Builds</a>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-box reveal">
+                <h2>Ready To Build Your<br><span class="text-gradient">Dream Machine?</span></h2>
+                <p>Choose from our curated collection of gaming desktops or let us build a custom rig just for you.</p>
+                <div class="cta-buttons">
+                    <a href="pcs.html" class="btn btn-primary btn-lg">Shop Gaming PCs</a>
+                    <a href="contact.html" class="btn btn-secondary btn-lg">Custom Build Request</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops engineered for power beyond limits. Built by gamers, for gamers.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter">𝕏</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="YouTube">▶</a>
+                        <a href="#" aria-label="Discord">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <a href="pcs.html">All Gaming PCs</a>
+                    <a href="pcs.html?category=Full Tower">Full Tower</a>
+                    <a href="pcs.html?category=Mid Tower">Mid Tower</a>
+                    <a href="pcs.html?category=Mini PC">Mini PC</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#">FAQ</a>
+                    <a href="#">Warranty</a>
+                    <a href="#">Shipping</a>
+                    <a href="#">Returns</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <!-- Scripts -->
+    <script src="js/products-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/home.js"></script>
+</body>
+
+</html>

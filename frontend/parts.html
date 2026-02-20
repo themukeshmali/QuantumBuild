@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Shop all PC parts at Quantum Build — CPUs, GPUs, RAM, motherboards, storage, PSUs, cases, cooling, monitors, keyboards, mice, headsets and more.">
+    <title>PC Parts — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/parts.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html" class="active">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span class="current">PC Parts</span>
+            </div>
+            <h1>PC <span class="text-gradient">Parts</span></h1>
+            <p>Hand-picked, premium components for your perfect gaming build.</p>
+
+            <!-- Search Bar -->
+            <div class="search-bar-wrap">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search parts by name, brand, or specs..."
+                        autocomplete="off">
+                    <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <section class="parts-filter-bar">
+        <div class="container">
+            <div class="cat-tabs" id="catTabs" role="tablist">
+                <!-- Populated by JS from CATEGORY_CONFIG -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Parts Layout: Sidebar + Grid -->
+    <section class="section parts-section">
+        <div class="container">
+            <div class="parts-layout">
+
+                <!-- Sidebar Filters -->
+                <aside class="parts-sidebar" id="partsSidebar">
+                    <div class="sidebar-header">
+                        <h3>Filters</h3>
+                        <button class="filter-reset-btn" id="filterResetBtn">Reset All</button>
+                    </div>
+
+                    <!-- Brand Filter -->
+                    <div class="filter-group" id="brandFilterGroup">
+                        <h4 class="filter-title" data-toggle="brandList">
+                            <span>Brand</span>
+                            <span class="filter-arrow">▾</span>
+                        </h4>
+                        <div class="filter-list" id="brandList">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="filter-group">
+                        <h4 class="filter-title" data-toggle="priceFilter">
+                            <span>Price Range</span>
+                            <span class="filter-arrow">▾</span>
+                        </h4>
+                        <div class="filter-list" id="priceFilter">
+                            <div class="price-range-display">
+                                <span id="priceMin">₹0</span>
+                                <span id="priceMax">₹1,70,000</span>
+                            </div>
+                            <input type="range" id="priceRangeSlider" min="0" max="170000" value="170000" step="1000"
+                                class="price-slider">
+                        </div>
+                    </div>
+
+                    <!-- Rating Filter -->
+                    <div class="filter-group">
+                        <h4 class="filter-title" data-toggle="ratingFilter">
+                            <span>Rating</span>
+                            <span class="filter-arrow">▾</span>
+                        </h4>
+                        <div class="filter-list" id="ratingFilter">
+                            <label class="filter-checkbox">
+                                <input type="radio" name="ratingFilter" value="0" checked>
+                                <span class="checkmark"></span> All Ratings
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="radio" name="ratingFilter" value="4.5">
+                                <span class="checkmark"></span> ★ 4.5 & Up
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="radio" name="ratingFilter" value="4.7">
+                                <span class="checkmark"></span> ★ 4.7 & Up
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="radio" name="ratingFilter" value="4.9">
+                                <span class="checkmark"></span> ★ 4.9 & Up
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <div class="parts-main">
+                    <div class="parts-toolbar">
+                        <div class="parts-count" id="partsCount">65 Parts</div>
+                        <div class="toolbar-right">
+                            <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle filters">
+                                ⚙ Filters
+                            </button>
+                            <div class="parts-sort-wrap">
+                                <label for="partsSort" class="sr-only">Sort by</label>
+                                <select id="partsSort" class="sort-select">
+                                    <option value="featured">Featured</option>
+                                    <option value="price-low">Price: Low → High</option>
+                                    <option value="price-high">Price: High → Low</option>
+                                    <option value="name">Name A-Z</option>
+                                    <option value="brand">Brand A-Z</option>
+                                    <option value="popularity">Most Popular</option>
+                                    <option value="rating">Highest Rated</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parts-grid" id="partsGrid">
+                        <!-- Rendered by parts.js -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="parts-empty" id="partsEmpty" style="display: none;">
+                        <div class="empty-icon">🔍</div>
+                        <h3>No Parts Found</h3>
+                        <p>Try adjusting your filters or search query.</p>
+                        <button class="btn btn-secondary" onclick="resetAllFilters()">Reset Filters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops and components for peak performance.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter">𝕏</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="YouTube">▶</a>
+                        <a href="#" aria-label="Discord">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Components</h4>
+                    <a href="parts.html?cat=cpu">CPUs</a>
+                    <a href="parts.html?cat=gpu">GPUs</a>
+                    <a href="parts.html?cat=ram">RAM</a>
+                    <a href="parts.html?cat=motherboard">Motherboards</a>
+                </div>
+                <div class="footer-col">
+                    <h4>More Parts</h4>
+                    <a href="parts.html?cat=storage">Storage</a>
+                    <a href="parts.html?cat=psu">PSUs</a>
+                    <a href="parts.html?cat=case">Cases</a>
+                    <a href="parts.html?cat=cooling">Cooling</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="pcs.html">Pre-Built PCs</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Support</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Detail Modal -->
+    <div class="part-modal-overlay" id="partModal">
+        <div class="part-modal">
+            <button class="modal-close" id="modalClose">✕</button>
+            <div class="modal-content" id="modalContent">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/parts-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/parts.js"></script>
+</body>
+
+</html>

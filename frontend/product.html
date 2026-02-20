@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Quantum Build — View detailed specs, performance benchmarks, and features of our premium gaming desktops.">
+    <title>Product Details — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/product.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html" class="active">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Product Content (populated by JS) -->
+    <main id="productMain">
+        <!-- Product Hero -->
+        <div class="page-header product-page-header">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="separator">/</span>
+                    <a href="pcs.html">Gaming PCs</a>
+                    <span class="separator">/</span>
+                    <span class="current" id="breadcrumbName">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <section class="section product-section">
+            <div class="container">
+                <div class="product-layout" id="productLayout">
+                    <!-- Left: Gallery -->
+                    <div class="product-gallery reveal-left">
+                        <div class="gallery-main" id="galleryMain">
+                            <div class="gallery-badge" id="galleryBadge"></div>
+                            <div class="gallery-image-wrapper">
+                                <div class="gallery-placeholder" id="galleryPlaceholder">
+                                    <div class="placeholder-pc">
+                                        <div class="ph-strip ph-strip-1"></div>
+                                        <div class="ph-strip ph-strip-2"></div>
+                                        <div class="ph-fan ph-fan-1">
+                                            <div class="ph-blade"></div>
+                                        </div>
+                                        <div class="ph-fan ph-fan-2">
+                                            <div class="ph-blade"></div>
+                                        </div>
+                                        <div class="ph-label" id="phLabel">QUANTUM</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-thumbs" id="galleryThumbs">
+                            <!-- Thumbnail buttons -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Info -->
+                    <div class="product-info reveal-right">
+                        <div class="product-category" id="productCategory"></div>
+                        <h1 class="product-title" id="productTitle">Loading...</h1>
+                        <div class="product-rating" id="productRating"></div>
+                        <p class="product-description" id="productDescription"></p>
+
+                        <div class="product-price-block">
+                            <div class="product-price" id="productPrice"></div>
+                            <div class="product-original-price" id="productOriginalPrice"></div>
+                            <div class="product-discount" id="productDiscount"></div>
+                        </div>
+
+                        <div class="product-quantity">
+                            <label>Quantity:</label>
+                            <div class="qty-controls">
+                                <button class="qty-btn" id="qtyMinus">−</button>
+                                <input type="number" id="qtyInput" value="1" min="1" max="10" readonly>
+                                <button class="qty-btn" id="qtyPlus">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-lg" id="addToCartBtn">🛒 Add to Cart</button>
+                            <button class="btn btn-secondary btn-lg" id="buyNowBtn">⚡ Buy Now</button>
+                        </div>
+
+                        <div class="product-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">🚚</span>
+                                <span>Free Shipping</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span>3-Year Warranty</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span>30-Day Returns</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Specs Table -->
+        <section class="section specs-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Full <span class="text-gradient">Specifications</span></h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="specs-table reveal" id="specsTable">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Benchmarks -->
+        <section class="section benchmarks-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Performance <span class="text-gradient">Benchmarks</span></h2>
+                    <div class="accent-line"></div>
+                    <p>Average FPS at Ultra settings</p>
+                </div>
+                <div class="benchmarks-grid reveal" id="benchmarksGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products -->
+        <section class="section related-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>You May <span class="text-gradient">Also Like</span></h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="products-grid" id="relatedGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops engineered for power beyond limits. Built by gamers, for gamers.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter">𝕏</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="YouTube">▶</a>
+                        <a href="#" aria-label="Discord">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <a href="pcs.html">All Gaming PCs</a>
+                    <a href="pcs.html?category=Full Tower">Full Tower</a>
+                    <a href="pcs.html?category=Mid Tower">Mid Tower</a>
+                    <a href="pcs.html?category=Mini PC">Mini PC</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#">FAQ</a>
+                    <a href="#">Warranty</a>
+                    <a href="#">Shipping</a>
+                    <a href="#">Returns</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/product.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Review your cart and proceed to checkout at Quantum Build.">
+    <title>Cart — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/cart.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="cart.html" class="nav-cart active" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span class="current">Shopping Cart</span>
+            </div>
+            <h1>Shopping <span class="text-gradient">Cart</span></h1>
+            <p id="summaryItemCount">0 items</p>
+        </div>
+    </div>
+
+    <!-- Cart Content -->
+    <section class="section cart-section">
+        <div class="container">
+            <div class="cart-layout">
+
+                <!-- Empty State -->
+                <div class="cart-empty" id="cartEmpty" style="display: none;">
+                    <div class="cart-empty-icon">🛒</div>
+                    <h2>Your cart is empty</h2>
+                    <p>Add some awesome gaming gear to get started!</p>
+                    <a href="parts.html" class="btn btn-primary">Browse PC Parts</a>
+                </div>
+
+                <!-- Cart Items -->
+                <div class="cart-items" id="cartItems">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Summary Sidebar -->
+                <div class="cart-summary" id="cartSummary">
+                    <div class="cart-summary-header">
+                        <h3>Order Summary</h3>
+                    </div>
+                    <div class="cart-summary-body">
+                        <div class="summary-row">
+                            <span class="label">Subtotal</span>
+                            <span class="value" id="summarySubtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Shipping</span>
+                            <span class="value" id="summaryShipping">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Tax (18% GST)</span>
+                            <span class="value" id="summaryTax">₹0</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row summary-total">
+                            <span class="label">Total</span>
+                            <span class="value" id="summaryTotal">₹0</span>
+                        </div>
+                        <div class="summary-savings" id="summarySavings" style="display: none;"></div>
+                    </div>
+                    <div class="cart-summary-footer">
+                        <a href="checkout.html" class="btn-checkout">⚡ Proceed to Checkout</a>
+                        <a href="parts.html" class="btn-continue">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops engineered for power beyond limits.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <a href="pcs.html">All Gaming PCs</a>
+                    <a href="parts.html">PC Parts</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#">FAQ</a>
+                    <a href="#">Shipping</a>
+                    <a href="#">Returns</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/parts-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Browse Quantum Build's complete lineup of premium gaming desktops — from compact Mini PCs to extreme Full Tower builds.">
+    <title>Gaming PCs — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/pcs.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html" class="active">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span class="current">Gaming PCs</span>
+            </div>
+            <h1>Gaming <span class="text-gradient">Desktops</span></h1>
+            <p>Explore our complete lineup of premium gaming machines</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="section pcs-main">
+        <div class="container">
+            <div class="pcs-layout">
+
+                <!-- Sidebar Filters -->
+                <aside class="filter-sidebar" id="filterSidebar">
+                    <div class="filter-header">
+                        <h3>Filters</h3>
+                        <button class="filter-reset" id="filterReset">Reset All</button>
+                    </div>
+
+                    <!-- Search -->
+                    <div class="filter-group">
+                        <label class="filter-label">Search</label>
+                        <input type="text" class="filter-search" id="searchInput" placeholder="Search PCs...">
+                    </div>
+
+                    <!-- Category -->
+                    <div class="filter-group">
+                        <label class="filter-label">Category</label>
+                        <div class="filter-options" id="categoryFilters">
+                            <button class="filter-chip active" data-category="All">All</button>
+                            <button class="filter-chip" data-category="Full Tower">Full Tower</button>
+                            <button class="filter-chip" data-category="Mid Tower">Mid Tower</button>
+                            <button class="filter-chip" data-category="Small Form Factor">SFF</button>
+                            <button class="filter-chip" data-category="Mini PC">Mini PC</button>
+                        </div>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div class="filter-group">
+                        <label class="filter-label">Price Range</label>
+                        <div class="filter-options">
+                            <button class="filter-chip price-chip active" data-min="0" data-max="999999">All</button>
+                            <button class="filter-chip price-chip" data-min="0" data-max="100000">Under ₹1L</button>
+                            <button class="filter-chip price-chip" data-min="100000" data-max="200000">₹1L -
+                                ₹2L</button>
+                            <button class="filter-chip price-chip" data-min="200000" data-max="300000">₹2L -
+                                ₹3L</button>
+                            <button class="filter-chip price-chip" data-min="300000" data-max="999999">₹3L+</button>
+                        </div>
+                    </div>
+
+                    <!-- GPU -->
+                    <div class="filter-group">
+                        <label class="filter-label">GPU</label>
+                        <div class="filter-options" id="gpuFilters">
+                            <button class="filter-chip gpu-chip active" data-gpu="All">All</button>
+                            <button class="filter-chip gpu-chip" data-gpu="4090">RTX 4090</button>
+                            <button class="filter-chip gpu-chip" data-gpu="4080">RTX 4080</button>
+                            <button class="filter-chip gpu-chip" data-gpu="4070">RTX 4070</button>
+                            <button class="filter-chip gpu-chip" data-gpu="4060">RTX 4060</button>
+                        </div>
+                    </div>
+
+                    <!-- Sort -->
+                    <div class="filter-group">
+                        <label class="filter-label">Sort By</label>
+                        <select class="filter-select" id="sortSelect">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low → High</option>
+                            <option value="price-high">Price: High → Low</option>
+                            <option value="name">Name: A → Z</option>
+                            <option value="rating">Highest Rated</option>
+                        </select>
+                    </div>
+
+                    <!-- Mobile Filter Toggle Close -->
+                    <button class="filter-close-btn" id="filterClose">Apply Filters</button>
+                </aside>
+
+                <!-- Products Grid Area -->
+                <div class="pcs-content">
+                    <div class="pcs-toolbar">
+                        <div class="pcs-count" id="pcsCount">8 Products</div>
+                        <button class="filter-mobile-toggle" id="filterToggle">
+                            ☰ Filters
+                        </button>
+                    </div>
+                    <div class="products-grid" id="productsGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="no-results" id="noResults" style="display: none;">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>No PCs Found</h3>
+                        <p>Try adjusting your filters or search query</p>
+                        <button class="btn btn-secondary" onclick="resetFilters()">Reset Filters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops engineered for power beyond limits. Built by gamers, for gamers.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter">𝕏</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="YouTube">▶</a>
+                        <a href="#" aria-label="Discord">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <a href="pcs.html">All Gaming PCs</a>
+                    <a href="pcs.html?category=Full Tower">Full Tower</a>
+                    <a href="pcs.html?category=Mid Tower">Mid Tower</a>
+                    <a href="pcs.html?category=Mini PC">Mini PC</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#">FAQ</a>
+                    <a href="#">Warranty</a>
+                    <a href="#">Shipping</a>
+                    <a href="#">Returns</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/pcs.js"></script>
+</body>
+
+</html>

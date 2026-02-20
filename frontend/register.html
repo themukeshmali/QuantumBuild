@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create your Quantum Build account to start building your dream gaming PC.">
+    <title>Register — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="#" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Register Section -->
+    <section class="auth-section">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="index.html" class="auth-logo">
+                    <div class="logo-icon">Q</div>
+                    <span>Quantum Build</span>
+                </a>
+                <h1>Create <span class="text-gradient">Account</span></h1>
+                <p>Join the Quantum Build community</p>
+            </div>
+
+            <div class="auth-alert" id="authAlert"></div>
+
+            <form class="auth-form" id="registerForm" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="name">Full Name</label>
+                    <input type="text" id="name" class="form-input" placeholder="Your name" required
+                        autocomplete="name">
+                    <span class="form-error" id="nameError">Name is required</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Address</label>
+                    <input type="email" id="email" class="form-input" placeholder="you@example.com" required
+                        autocomplete="email">
+                    <span class="form-error" id="emailError">Please enter a valid email</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="form-input-wrap">
+                        <input type="password" id="password" class="form-input" placeholder="Min 6 characters" required
+                            autocomplete="new-password">
+                        <button type="button" class="password-toggle" id="passwordToggle"
+                            aria-label="Toggle password visibility">👁</button>
+                    </div>
+                    <span class="form-error" id="passwordError">Password must be at least 6 characters</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <div class="form-input-wrap">
+                        <input type="password" id="confirmPassword" class="form-input" placeholder="Re-enter password"
+                            required autocomplete="new-password">
+                        <button type="button" class="password-toggle" id="confirmToggle"
+                            aria-label="Toggle password visibility">👁</button>
+                    </div>
+                    <span class="form-error" id="confirmPasswordError">Passwords do not match</span>
+                </div>
+
+                <button type="submit" class="btn-auth" id="submitBtn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="spinner"></span>
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Sign in</a></p>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // ============ Register Page Logic ============
+        const registerForm = document.getElementById('registerForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const submitBtn = document.getElementById('submitBtn');
+        const authAlert = document.getElementById('authAlert');
+
+        // Redirect if already logged in
+        if (isLoggedIn()) {
+            window.location.href = 'index.html';
+        }
+
+        // Password toggles
+        document.getElementById('passwordToggle').addEventListener('click', () => {
+            const isPass = passwordInput.type === 'password';
+            passwordInput.type = isPass ? 'text' : 'password';
+            document.getElementById('passwordToggle').textContent = isPass ? '🙈' : '👁';
+        });
+        document.getElementById('confirmToggle').addEventListener('click', () => {
+            const isPass = confirmPasswordInput.type === 'password';
+            confirmPasswordInput.type = isPass ? 'text' : 'password';
+            document.getElementById('confirmToggle').textContent = isPass ? '🙈' : '👁';
+        });
+
+        // Form submit
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            clearErrors();
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            let valid = true;
+
+            if (!name || name.length < 2) {
+                showFieldError('name', 'Name must be at least 2 characters');
+                valid = false;
+            }
+
+            if (!email || !/\S+@\S+\.\S+/.test(email)) {
+                showFieldError('email', 'Please enter a valid email');
+                valid = false;
+            }
+
+            if (!password || password.length < 6) {
+                showFieldError('password', 'Password must be at least 6 characters');
+                valid = false;
+            }
+
+            if (password !== confirmPassword) {
+                showFieldError('confirmPassword', 'Passwords do not match');
+                valid = false;
+            }
+
+            if (!valid) return;
+
+            setLoading(true);
+            try {
+                await registerUser(name, email, password);
+                showAlert('Account created! Redirecting...', 'success');
+                const redirect = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+                setTimeout(() => window.location.href = redirect, 800);
+            } catch (err) {
+                showAlert(err.message, 'error');
+                setLoading(false);
+            }
+        });
+
+        function showFieldError(field, msg) {
+            document.getElementById(field).classList.add('error');
+            const errEl = document.getElementById(field + 'Error');
+            if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.form-input').forEach(i => i.classList.remove('error'));
+            document.querySelectorAll('.form-error').forEach(e => e.classList.remove('visible'));
+            authAlert.className = 'auth-alert';
+            authAlert.textContent = '';
+        }
+
+        function showAlert(msg, type) {
+            authAlert.textContent = msg;
+            authAlert.className = `auth-alert ${type}`;
+        }
+
+        function setLoading(loading) {
+            submitBtn.disabled = loading;
+            submitBtn.classList.toggle('loading', loading);
+        }
+    </script>
+</body>
+
+</html>

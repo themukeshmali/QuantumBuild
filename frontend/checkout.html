@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete your purchase at Quantum Build.">
+    <title>Checkout — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/checkout.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="cart.html" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <a href="cart.html">Cart</a>
+                <span class="separator">/</span>
+                <span class="current">Checkout</span>
+            </div>
+            <h1>Secure <span class="text-gradient">Checkout</span></h1>
+        </div>
+    </div>
+
+    <!-- Steps -->
+    <section class="section">
+        <div class="container">
+            <div class="checkout-steps">
+                <div class="checkout-step active" data-step="1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Shipping</span>
+                </div>
+                <div class="checkout-step" data-step="2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Payment</span>
+                </div>
+                <div class="checkout-step" data-step="3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Review</span>
+                </div>
+                <div class="checkout-step" data-step="4">
+                    <span class="step-number">✓</span>
+                    <span class="step-label">Done</span>
+                </div>
+            </div>
+
+            <div class="checkout-layout">
+                <!-- Step 1: Shipping -->
+                <div class="checkout-panel active" id="step1">
+                    <div class="panel-header">
+                        <h2>Shipping <span class="text-gradient">Address</span></h2>
+                        <p>Where should we deliver your order?</p>
+                    </div>
+                    <form class="checkout-form" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="form-label" for="fullName">Full Name</label>
+                            <input type="text" id="fullName" class="form-input" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="address">Address</label>
+                            <input type="text" id="address" class="form-input" placeholder="Street address" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="city">City</label>
+                                <input type="text" id="city" class="form-input" placeholder="City" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="state">State</label>
+                                <input type="text" id="state" class="form-input" placeholder="State" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="postalCode">PIN Code</label>
+                                <input type="text" id="postalCode" class="form-input" placeholder="6-digit PIN"
+                                    maxlength="6" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="phone">Phone</label>
+                                <input type="tel" id="phone" class="form-input" placeholder="10-digit number"
+                                    maxlength="10" required>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="step-nav">
+                        <a href="cart.html" class="btn-back">← Back to Cart</a>
+                        <button class="btn-next" onclick="goToStep(2)">Continue to Payment →</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Payment -->
+                <div class="checkout-panel" id="step2">
+                    <div class="panel-header">
+                        <h2>Payment <span class="text-gradient">Method</span></h2>
+                        <p>Choose your preferred payment method</p>
+                    </div>
+                    <div class="payment-methods">
+                        <label class="payment-option selected">
+                            <input type="radio" name="payment" value="COD" checked>
+                            <span class="payment-radio"></span>
+                            <span class="payment-icon">💵</span>
+                            <div class="payment-info">
+                                <div class="payment-name">Cash on Delivery</div>
+                                <div class="payment-desc">Pay when your order arrives</div>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="UPI">
+                            <span class="payment-radio"></span>
+                            <span class="payment-icon">📱</span>
+                            <div class="payment-info">
+                                <div class="payment-name">UPI Payment</div>
+                                <div class="payment-desc">Google Pay, PhonePe, Paytm</div>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="Card">
+                            <span class="payment-radio"></span>
+                            <span class="payment-icon">💳</span>
+                            <div class="payment-info">
+                                <div class="payment-name">Credit / Debit Card</div>
+                                <div class="payment-desc">Visa, Mastercard, RuPay</div>
+                            </div>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="NetBanking">
+                            <span class="payment-radio"></span>
+                            <span class="payment-icon">🏦</span>
+                            <div class="payment-info">
+                                <div class="payment-name">Net Banking</div>
+                                <div class="payment-desc">All major banks supported</div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="step-nav">
+                        <button class="btn-back" onclick="goToStep(1)">← Back</button>
+                        <button class="btn-next" onclick="goToStep(3)">Review Order →</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Review -->
+                <div class="checkout-panel" id="step3">
+                    <div class="panel-header">
+                        <h2>Review <span class="text-gradient">Order</span></h2>
+                        <p>Confirm your order details before placing</p>
+                    </div>
+                    <div class="review-section-title">ORDER ITEMS</div>
+                    <div class="review-items" id="reviewItems">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="review-section-title">SHIPPING ADDRESS</div>
+                    <div class="review-info" id="reviewShipping"></div>
+                    <div class="review-section-title">PAYMENT METHOD</div>
+                    <div class="review-info" id="reviewPayment"></div>
+                    <div class="step-nav">
+                        <button class="btn-back" onclick="goToStep(2)">← Back</button>
+                        <button class="btn-next" onclick="goToStep(4)">✓ Place Order</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Success -->
+                <div class="checkout-panel checkout-success" id="step4">
+                    <div class="success-icon">🎉</div>
+                    <h2>Order <span class="text-gradient">Placed!</span></h2>
+                    <p>Your order has been placed successfully.</p>
+                    <div class="success-order-id">Order ID: <span id="orderId"></span></div>
+                    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:20px;">
+                        <a href="profile.html#orders" class="btn btn-primary">View My Orders</a>
+                        <a href="parts.html" class="btn btn-secondary">Continue Shopping</a>
+                    </div>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <div class="cart-summary" id="cartSummaryPanel">
+                    <div class="cart-summary-header">
+                        <h3>Order Summary</h3>
+                    </div>
+                    <div class="cart-summary-body">
+                        <div class="summary-row">
+                            <span class="label">Items (<span id="coItemCount">0</span>)</span>
+                            <span class="value" id="coSubtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Shipping</span>
+                            <span class="value" id="coShipping">FREE</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Tax (18% GST)</span>
+                            <span class="value" id="coTax">₹0</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row summary-total">
+                            <span class="label">Total</span>
+                            <span class="value" id="coTotal">₹0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops engineered for power beyond limits.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/parts-data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+
+</html>
