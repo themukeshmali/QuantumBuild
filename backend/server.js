@@ -28,13 +28,20 @@ app.use('/api/orders', orderRoutes);
 const __dirname = path.resolve();
 const frontendPath = path.join(__dirname, '..', 'frontend');
 
-// Always serve frontend static files
-app.use(express.static(frontendPath));
-
 if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(frontendPath));
+
     app.get('*', (req, res) =>
         res.sendFile(path.resolve(frontendPath, 'index.html'))
     );
+} else {
+    // Basic root route for development
+    app.get('/', (req, res) => {
+        res.send('API is running...');
+    });
+
+    // Serve static files in dev as well just in case
+    app.use(express.static(frontendPath));
 }
 
 app.use(notFound);
