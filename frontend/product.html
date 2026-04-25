@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Quantum Build — View detailed specs, performance benchmarks, and features of our premium gaming desktops.">
+    <title>Product Details — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/product.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html" class="active">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>                <a href="builder.html">PC Builder</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="cart.html" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <form class="nav-search" id="navSearch" onsubmit="handleNavSearch(event)" role="search">
+                    <input type="search" class="nav-search-input" id="navSearchInput" placeholder="Search products…"
+                        autocomplete="off" aria-label="Search products">
+                    <button type="submit" class="nav-search-btn" aria-label="Search">&#128269;</button>
+                </form>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Product Content (populated by JS) -->
+    <main id="productMain">
+        <!-- Product Hero -->
+        <div class="page-header product-page-header">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="separator">/</span>
+                    <a href="pcs.html">Gaming PCs</a>
+                    <span class="separator">/</span>
+                    <span class="current" id="breadcrumbName">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Details -->
+        <section class="section product-section">
+            <div class="container">
+                <div class="product-layout" id="productLayout">
+                    <!-- Left: Gallery -->
+                    <div class="product-gallery reveal-left">
+                        <div class="gallery-main" id="galleryMain">
+                            <div class="gallery-badge" id="galleryBadge"></div>
+                            <div class="gallery-image-wrapper">
+                                <img id="productMainImage" src="assets/images/gaming_pc_1.png" alt="Quantum RTX 4090 Gaming PC" loading="lazy"
+                                    onerror="this.style.display='none'"
+                                    style="width:100%; height:100%; object-fit:contain; border-radius: var(--radius-lg);">
+                            </div>
+                        </div>
+                        <div class="gallery-thumbs" id="galleryThumbs">
+                            <button class="thumb-btn active" data-img="assets/images/gaming_pc_1.png" style="padding: 4px; display: inline-flex; align-items: center; justify-content: center; background: var(--bg-hover); border-radius: 8px;">
+                                <img src="assets/images/gaming_pc_1.png" alt="Thumbnail 1" style="width: 60px; height: 60px; object-fit: contain;">
+                            </button>
+                            <button class="thumb-btn" data-img="assets/images/gaming_pc_2.png" style="padding: 4px; display: inline-flex; align-items: center; justify-content: center; background: var(--bg-hover); border-radius: 8px;">
+                                <img src="assets/images/gaming_pc_2.png" alt="Thumbnail 2" style="width: 60px; height: 60px; object-fit: contain;">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Info -->
+                    <div class="product-info reveal-right">
+                        <div class="product-category" id="productCategory"></div>
+                        <h1 class="product-title" id="productTitle">Loading...</h1>
+                        <div class="product-rating" id="productRating"></div>
+                        <p class="product-description" id="productDescription"></p>
+
+                        <div class="product-price-block">
+                            <div class="product-price" id="productPrice"></div>
+                            <div class="product-original-price" id="productOriginalPrice"></div>
+                            <div class="product-discount" id="productDiscount"></div>
+                        </div>
+
+                        <div class="product-quantity">
+                            <label>Quantity:</label>
+                            <div class="qty-controls">
+                                <button class="qty-btn" id="qtyMinus">−</button>
+                                <input type="number" id="qtyInput" value="1" min="1" max="10" readonly>
+                                <button class="qty-btn" id="qtyPlus">+</button>
+                            </div>
+                        </div>
+
+                        <div class="product-actions">
+                            <button class="btn btn-primary btn-lg" id="addToCartBtn">🛒 Add to Cart</button>
+                            <button class="btn btn-secondary btn-lg" id="buyNowBtn">⚡ Buy Now</button>
+                        </div>
+
+                        <div class="product-features">
+                            <div class="feature-item">
+                                <span class="feature-icon">🚚</span>
+                                <span>Free Shipping</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span>3-Year Warranty</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span>30-Day Returns</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Specs Table -->
+        <section class="section specs-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Full <span class="text-gradient">Specifications</span></h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="specs-table reveal" id="specsTable">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Benchmarks -->
+        <section class="section benchmarks-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Performance <span class="text-gradient">Benchmarks</span></h2>
+                    <div class="accent-line"></div>
+                    <p>Average FPS at Ultra settings</p>
+                </div>
+                <div class="benchmarks-grid reveal" id="benchmarksGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Reviews -->
+        <section class="section reviews-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>Customer <span class="text-gradient">Reviews</span></h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="reviews-container reveal">
+                    <!-- Form (hidden if not logged in) -->
+                    <div class="review-form-wrapper" id="reviewFormWrapper" style="display: none; margin-bottom: 2rem; background: var(--bg-card); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Write a Review</h3>
+                        <form id="reviewForm">
+                            <div class="form-group">
+                                <label class="form-label" for="reviewRating">Rating</label>
+                                <select class="form-input" id="reviewRating" required style="background-color: var(--bg-input);">
+                                    <option value="">Select Rating...</option>
+                                    <option value="5">5 - Excellent</option>
+                                    <option value="4">4 - Very Good</option>
+                                    <option value="3">3 - Good</option>
+                                    <option value="2">2 - Fair</option>
+                                    <option value="1">1 - Poor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="reviewComment">Comment</label>
+                                <textarea class="form-input" id="reviewComment" rows="4" required style="background-color: var(--bg-input); resize: vertical;"></textarea>
+                            </div>
+                            <div id="reviewError" class="auth-error" style="display: none; margin-bottom: 1rem;"></div>
+                            <button type="submit" class="btn btn-primary" id="submitReviewBtn">Submit Review</button>
+                        </form>
+                    </div>
+                    <div id="loginToReviewMsg" style="margin-bottom: 2rem; padding: 1rem; background: var(--bg-surface); border-radius: var(--radius-sm); text-align: center;">
+                        <p style="color: var(--text-muted);">Please <a href="login.html" style="color: var(--accent-red); text-decoration: underline;">log in</a> to write a review.</p>
+                    </div>
+
+                    <!-- Reviews List -->
+                    <div class="reviews-list" id="reviewsList">
+                        <p style="color: var(--text-muted); text-align: center;">Loading reviews...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products -->
+        <section class="section related-section">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>You May <span class="text-gradient">Also Like</span></h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="products-grid" id="relatedGrid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo"><span>Quantum Build</span></div>
+                    <p>Premium gaming desktops engineered for power beyond limits. Built by gamers, for gamers.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Twitter">𝕏</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="YouTube">▶</a>
+                        <a href="#" aria-label="Discord">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <a href="pcs.html">All Gaming PCs</a>
+                    <a href="pcs.html?category=Full Tower">Full Tower</a>
+                    <a href="pcs.html?category=Mid Tower">Mid Tower</a>
+                    <a href="pcs.html?category=Mini PC">Mini PC</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>                <a href="builder.html">PC Builder</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="#">FAQ</a>
+                    <a href="#">Warranty</a>
+                    <a href="#">Shipping</a>
+                    <a href="#">Returns</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Quantum Build. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/parts-data.js"></script>
+    <script src="js/api-client.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/product.js"></script>
+</body>
+
+</html>

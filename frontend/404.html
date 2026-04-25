@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found — Quantum Build">
+    <meta name="robots" content="noindex">
+    <title>404 — Page Not Found | Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* ── 404 Page Styles ───────────────────────────── */
+        .page-404 {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 40px 24px;
+        }
+
+        /* Animated BG Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            opacity: 0.10;
+        }
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: #d4003a;
+            top: -200px; right: -150px;
+            animation: drift 9s ease-in-out infinite;
+        }
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: #7c3aed;
+            bottom: -100px; left: -100px;
+            animation: drift 12s ease-in-out infinite reverse;
+        }
+        @keyframes drift {
+            0%,100% { transform: translate(0,0) scale(1); }
+            50%      { transform: translate(30px,-30px) scale(1.08); }
+        }
+
+        /* Grid lines */
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(212,0,58,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212,0,58,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .content-404 {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+        }
+
+        /* Glitch number */
+        .glitch-wrap {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(7rem, 20vw, 10rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 8px;
+            color: #fff;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .glitch-wrap::before,
+        .glitch-wrap::after {
+            content: '404';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .glitch-wrap::before {
+            color: #d4003a;
+            animation: glitch1 3s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+        }
+        .glitch-wrap::after {
+            color: #00c4e0;
+            animation: glitch2 3s infinite;
+            clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        }
+        @keyframes glitch1 {
+            0%, 90%, 100% { transform: translate(0); }
+            91% { transform: translate(-4px, 2px); }
+            93% { transform: translate(4px, -2px); }
+            95% { transform: translate(-2px, 1px); }
+        }
+        @keyframes glitch2 {
+            0%, 88%, 100% { transform: translate(0); }
+            89% { transform: translate(4px, -2px); }
+            91% { transform: translate(-4px, 2px); }
+            93% { transform: translate(2px, -1px); }
+        }
+
+        .error-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-red, #d4003a);
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .error-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .error-desc {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            color: #8a8a9a;
+            margin-bottom: 40px;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-links {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .error-links-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #55556a;
+            margin-bottom: 18px;
+        }
+
+        .error-links-grid {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-link-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: #8a8a9a;
+            transition: all 0.2s;
+        }
+        .error-link-chip:hover {
+            border-color: var(--accent-red, #d4003a);
+            color: #fff;
+            background: rgba(212,0,58,0.08);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>                <a href="builder.html">PC Builder</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <a href="cart.html" class="nav-cart" id="navCart">
+                    🛒<span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- 404 Content -->
+    <div class="page-404">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-bg"></div>
+
+        <div class="content-404">
+            <div class="glitch-wrap">404</div>
+            <span class="error-label">Signal Lost</span>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-desc">
+                The page you're looking for has been disconnected, moved, or never existed in this sector.
+            </p>
+
+            <div class="error-actions">
+                <a href="index.html" class="btn btn-primary">⚡ Back to Home</a>
+                <a href="parts.html" class="btn btn-secondary">Browse Parts</a>
+            </div>
+
+            <div class="error-links">
+                <div class="error-links-label">Quick Navigation</div>
+                <div class="error-links-grid">
+                    <a href="pcs.html" class="error-link-chip">🖥️ Gaming PCs</a>
+                    <a href="parts.html" class="error-link-chip">🔧 PC Parts</a>
+                    <a href="cart.html" class="error-link-chip">🛒 Cart</a>
+                    <a href="profile.html" class="error-link-chip">👤 Profile</a>
+                    <a href="contact.html" class="error-link-chip">📧 Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api-client.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

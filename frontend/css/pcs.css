@@ -1,0 +1,265 @@
+/* ============================================
+   QUANTUM BUILD — PCs Listing Page Styles
+   ============================================ */
+
+.pcs-main {
+    padding-top: 40px;
+}
+
+.pcs-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* ============ Filter Sidebar ============ */
+.filter-sidebar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 28px;
+    position: sticky;
+    top: calc(var(--nav-height) + 20px);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.filter-header h3 {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.filter-reset {
+    background: none;
+    border: none;
+    color: var(--accent-red);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: opacity var(--transition-fast);
+}
+
+.filter-reset:hover {
+    opacity: 0.7;
+}
+
+.filter-group {
+    margin-bottom: 24px;
+}
+
+.filter-label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.filter-search {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+}
+
+.filter-search:focus {
+    border-color: var(--accent-red);
+    box-shadow: 0 0 0 2px rgba(255, 0, 64, 0.1);
+}
+
+.filter-search::placeholder {
+    color: var(--text-muted);
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-chip {
+    padding: 6px 14px;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    letter-spacing: 0.5px;
+}
+
+.filter-chip:hover {
+    border-color: var(--border-glow);
+    color: var(--text-primary);
+}
+
+.filter-chip.active {
+    background: rgba(255, 0, 64, 0.1);
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
+.filter-select {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+.filter-select:focus {
+    border-color: var(--accent-red);
+}
+
+.filter-select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.filter-close-btn {
+    display: none;
+    width: 100%;
+    padding: 12px;
+    margin-top: 16px;
+    background: var(--accent-gradient);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/* ============ Products Content ============ */
+.pcs-content {
+    min-height: 60vh;
+}
+
+.pcs-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.pcs-count {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.filter-mobile-toggle {
+    display: none;
+    padding: 8px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-mobile-toggle:hover {
+    border-color: var(--accent-red);
+}
+
+.no-results {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.no-results-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.no-results h3 {
+    margin-bottom: 8px;
+}
+
+.no-results p {
+    margin-bottom: 24px;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 992px) {
+    .pcs-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 300px;
+        height: 100vh;
+        z-index: 1001;
+        border-radius: 0;
+        overflow-y: auto;
+        transition: left var(--transition-normal);
+        padding-top: 40px;
+    }
+
+    .filter-sidebar.open {
+        left: 0;
+    }
+
+    .filter-mobile-toggle {
+        display: block;
+    }
+
+    .filter-close-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-header {
+        padding: 100px 0 30px;
+    }
+
+    .page-header h1 {
+        font-size: 1.6rem;
+    }
+}

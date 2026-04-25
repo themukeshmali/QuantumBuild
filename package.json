@@ -1,0 +1,18 @@
+{
+    "name": "quantumbuild",
+    "version": "1.0.0",
+    "description": "QuantumBuild — Full Stack PC E-Commerce Platform",
+    "main": "backend/server.js",
+    "type": "module",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "scripts": {
+        "start":        "node backend/server.js",
+        "dev":          "cd backend && npm run dev",
+        "install:backend": "cd backend && npm install",
+        "data:import":  "cd backend && npm run data:import",
+        "data:destroy": "cd backend && npm run data:destroy",
+        "test":         "node backend/test-runner.js"
+    }
+}

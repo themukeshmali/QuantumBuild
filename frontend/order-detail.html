@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track your Quantum Build order in real-time. View order details, shipping info, and payment status.">
+    <title>Order Details — Quantum Build</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <style>
+        .order-detail-section { padding: 60px 0 80px; }
+        .order-detail-card {
+            background: var(--bg-card, #111);
+            border: 1px solid var(--border-color, rgba(255,255,255,0.06));
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .od-header {
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.06));
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .od-header h3 { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted, #666); }
+        .od-body { padding: 24px 28px; }
+        .od-item-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.06));
+        }
+        .od-item-row:last-child { border-bottom: none; }
+        .od-item-img {
+            width: 56px; height: 56px; border-radius: 8px;
+            background: var(--bg-secondary, #1a1a1a);
+            object-fit: cover; flex-shrink: 0;
+            border: 1px solid var(--border-color, rgba(255,255,255,0.06));
+        }
+        .od-item-name { font-weight: 600; font-size: 0.9rem; color: var(--text-primary, #fff); }
+        .od-item-qty { font-size: 0.78rem; color: var(--text-muted, #666); margin-top: 3px; }
+        .od-item-price { margin-left: auto; font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
+        .od-summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.875rem; color: var(--text-secondary, #aaa); border-bottom: 1px solid var(--border-color, rgba(255,255,255,0.06)); }
+        .od-summary-row:last-child { border-bottom: none; font-weight: 700; font-size: 1rem; color: var(--text-primary, #fff); padding-top: 14px; }
+        .od-info-row { display: flex; flex-direction: column; gap: 4px; font-size: 0.875rem; color: var(--text-secondary, #aaa); line-height: 1.6; }
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 14px; border-radius: 99px;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+        }
+        .status-paid { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+        .status-unpaid { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+        .status-delivered { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+        .status-pending { background: rgba(59,130,246,0.1); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+        .od-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .od-timeline { display: flex; flex-direction: column; gap: 0; }
+        .od-timeline-step { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; position: relative; }
+        .od-timeline-step:not(:last-child)::after { content: ''; position: absolute; left: 15px; top: 42px; width: 2px; height: calc(100% - 10px); background: var(--border-color, rgba(255,255,255,0.06)); }
+        .od-timeline-dot { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; z-index: 1; }
+        .od-timeline-dot.done { background: rgba(16,185,129,0.15); border: 2px solid #10b981; }
+        .od-timeline-dot.pending { background: var(--bg-elevated, #1a1a1a); border: 2px solid var(--border-color, rgba(255,255,255,0.06)); }
+        .od-timeline-info { flex: 1; }
+        .od-timeline-title { font-size: 0.875rem; font-weight: 600; color: var(--text-primary, #fff); }
+        .od-timeline-date { font-size: 0.72rem; color: var(--text-muted, #666); margin-top: 2px; }
+        .loading-state { text-align: center; padding: 80px; color: var(--text-muted, #666); }
+        .spinner-lg { display: inline-block; width: 36px; height: 36px; border: 3px solid var(--border-color, rgba(255,255,255,0.1)); border-top-color: #d4003a; border-radius: 50%; animation: spin 0.6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) { .od-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">Q</div>
+                <span>Quantum Build</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html">Home</a>
+                <a href="pcs.html">Gaming PCs</a>
+                <a href="parts.html">PC Parts</a>                <a href="builder.html">PC Builder</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="nav-actions">
+                <form class="nav-search" id="navSearch" onsubmit="handleNavSearch(event)" role="search">
+                    <input type="search" class="nav-search-input" id="navSearchInput" placeholder="Search products…" autocomplete="off" aria-label="Search products">
+                    <button type="submit" class="nav-search-btn" aria-label="Search">🔍</button>
+                </form>
+                <a href="cart.html" class="nav-cart" id="navCart">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <div class="nav-toggle" id="navToggle">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <a href="profile.html#orders">My Orders</a>
+                <span class="separator">/</span>
+                <span class="current" id="breadcrumbId">Order Details</span>
+            </div>
+            <h1>Order <span class="text-gradient">Details</span></h1>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <section class="order-detail-section">
+        <div class="container">
+
+            <div id="loadingState" class="loading-state">
+                <div class="spinner-lg"></div>
+                <p style="margin-top:16px;">Loading order...</p>
+            </div>
+
+            <div id="orderContent" style="display:none;">
+
+                <!-- Status Bar -->
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:24px;">
+                    <div>
+                        <div style="font-size:0.72rem; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Order</div>
+                        <div id="orderIdDisplay" style="font-family:monospace; font-size:1rem; font-weight:700;"></div>
+                    </div>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap;" id="statusBadges"></div>
+                </div>
+
+                <div class="od-grid">
+                    <!-- Left Column -->
+                    <div>
+                        <!-- Order Items -->
+                        <div class="order-detail-card">
+                            <div class="od-header"><h3>Order Items</h3></div>
+                            <div class="od-body" id="orderItems"></div>
+                        </div>
+
+                        <!-- Price Summary -->
+                        <div class="order-detail-card">
+                            <div class="od-header"><h3>Price Summary</h3></div>
+                            <div class="od-body" id="priceSummary"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div>
+                        <!-- Order Timeline -->
+                        <div class="order-detail-card">
+                            <div class="od-header"><h3>Order Status</h3></div>
+                            <div class="od-body">
+                                <div class="od-timeline" id="orderTimeline"></div>
+                            </div>
+                        </div>
+
+                        <!-- Shipping -->
+                        <div class="order-detail-card">
+                            <div class="od-header"><h3>Shipping Address</h3></div>
+                            <div class="od-body">
+                                <div class="od-info-row" id="shippingInfo"></div>
+                            </div>
+                        </div>
+
+                        <!-- Payment -->
+                        <div class="order-detail-card">
+                            <div class="od-header"><h3>Payment Info</h3></div>
+                            <div class="od-body">
+                                <div class="od-info-row" id="paymentInfo"></div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:4px;">
+                            <a href="profile.html#orders" class="btn btn-secondary">← Back to Orders</a>
+                            <a href="parts.html" class="btn btn-primary">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="errorState" style="display:none; text-align:center; padding:80px 20px;">
+                <div style="font-size:3rem; margin-bottom:16px; opacity:0.4;">📦</div>
+                <h2 id="errorMsg" style="color:var(--text-secondary);">Order not found</h2>
+                <a href="profile.html#orders" class="btn btn-secondary" style="margin-top:20px;">← View All Orders</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>© 2026 Quantum Build. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api-client.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/order-detail.js"></script>
+</body>
+</html>

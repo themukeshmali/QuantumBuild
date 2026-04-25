@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="QuantumBuild Admin Dashboard — Secure login for administrators.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Login — Quantum Build</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<main class="login-page" id="loginPage">
+
+    <!-- Animated Background -->
+    <div class="login-bg">
+        <div class="login-bg-orb login-bg-orb-1"></div>
+        <div class="login-bg-orb login-bg-orb-2"></div>
+        <div class="login-grid"></div>
+    </div>
+
+    <!-- Login Card -->
+    <div class="login-card" role="main" aria-label="Admin login form">
+
+        <!-- Logo -->
+        <div class="login-logo">
+            <div class="login-logo-icon">Q</div>
+            <div class="login-logo-text">
+                Quantum Build
+                <span class="login-logo-sub">Admin Console</span>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <h1 class="login-title">Welcome back</h1>
+        <p class="login-subtitle">Sign in with your administrator credentials to continue.</p>
+
+        <!-- Error Alert -->
+        <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
+
+        <!-- Form -->
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label class="form-label" for="loginEmail">Email Address</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    class="form-input"
+                    placeholder="admin@quantumbuild.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="loginPassword">Password</label>
+                <input
+                    type="password"
+                    id="loginPassword"
+                    class="form-input"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="loginBtn" style="margin-top:8px;">
+                <span id="loginBtnText">Sign In to Dashboard</span>
+            </button>
+        </form>
+
+        <!-- Back Link -->
+        <p style="margin-top: 24px; text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+            <a href="../frontend/index.html" style="color: var(--text-muted); text-decoration: underline; text-underline-offset: 3px; transition: color 0.15s;"
+               onmouseover="this.style.color='var(--accent-red)'"
+               onmouseout="this.style.color='var(--text-muted)'">
+                ← Back to Quantum Build Store
+            </a>
+        </p>
+
+    </div>
+</main>
+
+<script src="js/api.js"></script>
+<script>
+    // Redirect if already logged in as admin
+    document.addEventListener('DOMContentLoaded', () => {
+        if (isAdmin()) {
+            window.location.href = 'dashboard.html';
+            return;
+        }
+
+        const form = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginBtnText = document.getElementById('loginBtnText');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showError('Please enter your email and password.');
+                return;
+            }
+
+            // Loading state
+            loginBtn.disabled = true;
+            loginBtnText.innerHTML = '<span class="spinner" style="border-width:2px;width:16px;height:16px;"></span> Signing in...';
+            loginError.classList.remove('visible');
+
+            try {
+                const data = await apiLogin(email, password);
+
+                if (!data.isAdmin) {
+                    await new Promise(r => setTimeout(r, 400));
+                    showError('Access denied. This account does not have administrator privileges.');
+                    return;
+                }
+
+                saveUser(data);
+                // Small success delay
+                loginBtnText.textContent = '✓ Access Granted';
+                loginBtn.style.background = 'linear-gradient(135deg, #10b981, #34d399)';
+                await new Promise(r => setTimeout(r, 600));
+                window.location.href = 'dashboard.html';
+
+            } catch (err) {
+                showError(err.message || 'Login failed. Please check your credentials.');
+            } finally {
+                if (!isAdmin()) {
+                    loginBtn.disabled = false;
+                    loginBtnText.textContent = 'Sign In to Dashboard';
+                    loginBtn.style.background = '';
+                }
+            }
+        });
+
+        function showError(msg) {
+            loginError.textContent = msg;
+            loginError.classList.remove('visible');
+            void loginError.offsetWidth; // reflow for animation
+            loginError.classList.add('visible');
+            loginBtn.disabled = false;
+            loginBtnText.textContent = 'Sign In to Dashboard';
+            loginBtn.style.background = '';
+        }
+    });
+</script>
+</body>
+</html>
