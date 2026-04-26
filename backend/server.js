@@ -1,5 +1,10 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 // ── DNS: MUST be configured BEFORE connectDB() ───────────────
 // On Windows, MongoDB Atlas SRV lookups default to IPv6 → ECONNREFUSED.
@@ -8,7 +13,6 @@ import dns from 'dns';
 dns.setDefaultResultOrder('ipv4first');
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
-import path from 'path';
 import express from 'express';
 import colors from 'colors';
 import cors from 'cors';
@@ -62,9 +66,7 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/coupons', couponRoutes);
-
 // Serve frontend and dashboard as static files
-const __dirname = path.resolve();
 const frontendPath = path.join(__dirname, '..', 'frontend');
 const dashboardPath = path.join(__dirname, '..', 'dashboard');
 
