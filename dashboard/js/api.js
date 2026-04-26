@@ -2,9 +2,10 @@
 // QUANTUM BUILD — Dashboard API Layer + Auth Utilities
 // ============================================================
 
+// Dev: local backend | Production: absolute Render URL (required for Vercel split-deploy)
 const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:5000/api'
-    : '/api';
+    : 'https://quantumbuild.onrender.com/api';
 
 // ============ Auth ============
 function getToken() {

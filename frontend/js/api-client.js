@@ -5,10 +5,10 @@
 // ============================================================
 
 // ── Base URL ────────────────────────────────────────────────
-// Works locally and in production (relative path)
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+// Dev: local backend | Production: absolute Render URL (required for Vercel split-deploy)
+const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
     ? 'http://localhost:5000/api'
-    : '/api';
+    : 'https://quantumbuild.onrender.com/api';
 
 // ── Fetch Helpers ────────────────────────────────────────────
 
