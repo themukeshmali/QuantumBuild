@@ -9,8 +9,6 @@
     },
     "scripts": {
         "start":        "node backend/server.js",
-        "build":        "npm run install:backend",
-        "postinstall":  "npm run install:backend",
         "dev":          "cd backend && npm run dev",
         "install:backend": "cd backend && npm install",
         "data:import":  "cd backend && npm run data:import",

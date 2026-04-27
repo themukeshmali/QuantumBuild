@@ -162,7 +162,7 @@
         </div>
 
         <br>
-        <a href="../frontend/index.html" class="back-link">← Back to Store</a>
+        <a href="https://quantum-build-frontend.vercel.app/" onclick="if(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'){this.href='../frontend/index.html'}" class="back-link">← Back to Store</a>
     </div>
 
     <script>
@@ -170,7 +170,7 @@
             var isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
             var target = isLocal
                 ? window.location.origin + '/dashboard/index.html'
-                : '/dashboard/index.html';
+                : 'https://quantum-build-dashboard.vercel.app/';
             // Brief delay so the animated splash shows (UX polish)
             setTimeout(function () {
                 window.location.replace(target);

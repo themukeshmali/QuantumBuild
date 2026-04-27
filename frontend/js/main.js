@@ -231,7 +231,8 @@ function updateCartCount() {
 
         if (user && user.isAdmin && navLinks && !adminLink) {
             const li = document.createElement('a');
-            li.href = '../dashboard/index.html';
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+            li.href = isLocal ? '../dashboard/index.html' : 'https://quantum-build-dashboard.vercel.app/';
             li.id = 'nav-admin-link';
             li.textContent = 'View Dashboard';
             li.style.cssText = 'color:var(--accent-red);font-weight:700;letter-spacing:.5px;margin-right:24px;text-decoration:none;';
