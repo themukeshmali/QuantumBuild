@@ -42,7 +42,14 @@ const app = express();
 app.use(helmetMiddleware);
 
 // ── CORS — allow frontend origin ────────────────────────────
-const allowedOrigins = [process.env.FRONTEND_URL, process.env.DASHBOARD_URL].filter(Boolean);
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    process.env.DASHBOARD_URL,
+    // Production fallbacks — always allow the deployed Vercel apps
+    'https://quantum-build-frontend.vercel.app',
+    'https://quantum-build-dashboard.vercel.app',
+].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i); // dedupe
+
 app.use(cors({
     origin: allowedOrigins.length > 0 ? allowedOrigins : '*',
     credentials: true,

@@ -37,4 +37,6 @@ services:
       - key: RAZORPAY_KEY_SECRET
         sync: false
       - key: FRONTEND_URL
-        sync: false
+        value: https://quantum-build-frontend.vercel.app
+      - key: DASHBOARD_URL
+        value: https://quantum-build-dashboard.vercel.app

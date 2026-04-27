@@ -211,7 +211,11 @@ const forgotPassword = asyncHandler(async (req, res) => {
     await user.save({ validateBeforeSave: false });
 
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5000';
-    const resetUrl = `${frontendUrl}/frontend/reset-password.html?token=${rawToken}`;
+    // On Vercel the frontend is served at root (/reset-password.html)
+    // On local dev it's served under /frontend/reset-password.html
+    const isLocal = !process.env.FRONTEND_URL || process.env.FRONTEND_URL.includes('localhost');
+    const resetPath = isLocal ? '/frontend/reset-password.html' : '/reset-password.html';
+    const resetUrl = `${frontendUrl}${resetPath}?token=${rawToken}`;
 
     try {
         await sendPasswordResetEmail(user.email, user.name, resetUrl);
