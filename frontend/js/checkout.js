@@ -440,7 +440,17 @@ async function initiateRazorpay() {
     try {
         // 1. Create Razorpay order on backend
         const orderData = buildOrderData();
-        const amountPaise = Math.round(orderData.totalPrice * 100); // Razorpay uses paise
+        const realAmountPaise = Math.round(orderData.totalPrice * 100); // Razorpay uses paise
+
+        // Get Razorpay key first to detect test mode
+        const rzpKey = await getRazorpayKey();
+        const isTestMode = rzpKey && rzpKey.startsWith('rzp_test_');
+
+        // ⚠️ TEST MODE SAFETY CAP:
+        // Razorpay test gateway rejects amounts > ₹50,000 for UPI/most methods.
+        // In test mode we send ₹1 (100 paise) so the flow completes successfully.
+        // Real money is NEVER charged in test mode regardless.
+        const amountPaise = isTestMode ? 100 : realAmountPaise;
 
         const rzpOrderRes = await fetchWithAuth(`${API_BASE}/payment/razorpay/order`, {
             method: 'POST',
@@ -453,15 +463,12 @@ async function initiateRazorpay() {
         // 2. Load Razorpay script dynamically (if not already loaded)
         await loadRazorpayScript();
 
-        // 3. Get Razorpay key — set by backend via config or from env
-        const rzpKey = await getRazorpayKey();
-
-        // 4. Detect payment method
+        // 3. Detect payment method
         const paymentValue = getSelectedPaymentValue();
         const isUPI = paymentValue === 'UPI';
         const upiId = isUPI ? (document.getElementById('upiId')?.value.trim() || '') : '';
 
-        // 5. Open Razorpay checkout
+        // 4. Open Razorpay checkout
         const user = getCurrentUser();
 
         // We store rzp reference so we can close it before async processing
@@ -473,7 +480,9 @@ async function initiateRazorpay() {
             amount: rzpOrder.amount,
             currency: rzpOrder.currency,
             name: 'Quantum Build',
-            description: `Order for ${orderData.orderItems.length} item(s)`,
+            description: isTestMode
+                ? `TEST MODE — Order for ${orderData.orderItems.length} item(s) (₹${orderData.totalPrice.toLocaleString('en-IN')})`
+                : `Order for ${orderData.orderItems.length} item(s)`,
             order_id: rzpOrder.id,
             prefill: {
                 name: document.getElementById('fullName')?.value || user?.name || '',
@@ -528,6 +537,7 @@ async function initiateRazorpay() {
                     rzpInstance.close();
                 }
                 // Run the async verification as a separate promise chain
+                // Pass actual order total (not test capped amount) for the DB record
                 verifyAndCreateOrder(orderData, response);
             },
         };
