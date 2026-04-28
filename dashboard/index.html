@@ -39,15 +39,15 @@
         <div class="login-error" id="loginError" role="alert" aria-live="polite"></div>
 
         <!-- Form -->
-        <form id="loginForm" novalidate>
+        <form id="loginForm" autocomplete="off" novalidate>
             <div class="form-group">
                 <label class="form-label" for="loginEmail">Email Address</label>
                 <input
                     type="email"
                     id="loginEmail"
                     class="form-input"
-                    placeholder="admin@quantumbuild.com"
-                    autocomplete="email"
+                    placeholder="Enter admin email"
+                    autocomplete="off"
                     required
                 >
             </div>
@@ -59,7 +59,7 @@
                     id="loginPassword"
                     class="form-input"
                     placeholder="Enter your password"
-                    autocomplete="current-password"
+                    autocomplete="new-password"
                     required
                 >
             </div>
