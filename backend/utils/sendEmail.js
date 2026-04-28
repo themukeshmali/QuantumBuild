@@ -24,6 +24,20 @@ const sendEmail = async ({ to, subject, html, text }) => {
         text: text || html.replace(/<[^>]+>/g, ''),
     };
 
+    // In development, skip real SMTP if credentials look like a plain password
+    if (process.env.NODE_ENV === 'development') {
+        const pass = process.env.EMAIL_PASS || '';
+        // A Gmail App Password is always 16 chars (no spaces version) or has spaces "xxxx xxxx xxxx xxxx"
+        // If it looks like a plain password (too short or no spaces), mock immediately
+        const looksLikePlain = pass.replace(/\s/g, '').length < 16;
+        if (looksLikePlain) {
+            console.log('\n=== DEVELOPMENT MODE: EMAIL MOCKED (no valid App Password set) ===');
+            console.log(`To: ${to}\nSubject: ${subject}\nText:\n${mailOptions.text}`);
+            console.log('===================================================================\n');
+            return { messageId: 'mock-id-dev' };
+        }
+    }
+
     try {
         const info = await transporter.sendMail(mailOptions);
         console.log(`Email sent: ${info.messageId}`);
@@ -80,6 +94,46 @@ export const sendPasswordResetEmail = async (email, name, resetUrl) => {
     `;
 
     return sendEmail({ to: email, subject: 'Reset Your Quantum Build Password', html });
+};
+
+export const sendOtpEmail = async (email, name, otp) => {
+    const html = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+    <body style="margin:0;padding:0;background:#06060b;font-family:Inter,sans-serif;">
+      <div style="max-width:560px;margin:40px auto;background:#0f0f1a;border:1px solid #1e1e2e;border-radius:16px;overflow:hidden;">
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg,#d4003a,#e02020);padding:32px 40px;text-align:center;">
+          <div style="font-size:2rem;font-weight:900;letter-spacing:3px;color:#fff;font-family:Georgia,serif;">Q</div>
+          <div style="color:#fff;font-size:1.1rem;font-weight:700;letter-spacing:2px;margin-top:8px;text-transform:uppercase;">Quantum Build</div>
+        </div>
+        <!-- Body -->
+        <div style="padding:40px;">
+          <h2 style="color:#fff;font-size:1.3rem;margin:0 0 12px;">Hi ${name},</h2>
+          <p style="color:#8a8a9a;font-size:0.95rem;line-height:1.6;margin:0 0 28px;">
+            Use the OTP below to reset your Quantum Build password. This code expires in <strong style="color:#fff">10 minutes</strong>.
+          </p>
+          <!-- OTP Box -->
+          <div style="text-align:center;margin:0 0 28px;">
+            <div style="display:inline-block;background:#13131f;border:2px solid #d4003a;border-radius:12px;padding:20px 48px;">
+              <div style="font-size:2.4rem;font-weight:900;letter-spacing:12px;color:#fff;font-family:monospace;">${otp}</div>
+            </div>
+          </div>
+          <p style="color:#55556a;font-size:0.8rem;line-height:1.6;margin:0;">
+            If you didn't request this, you can safely ignore this email — your password will not change.
+          </p>
+        </div>
+        <!-- Footer -->
+        <div style="padding:20px 40px;border-top:1px solid #1e1e2e;text-align:center;">
+          <p style="color:#55556a;font-size:0.72rem;margin:0;">© 2026 Quantum Build · Power Beyond Limits</p>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+
+    return sendEmail({ to: email, subject: 'Your Quantum Build OTP Code', html });
 };
 
 export const sendOrderConfirmationEmail = async (email, name, order) => {

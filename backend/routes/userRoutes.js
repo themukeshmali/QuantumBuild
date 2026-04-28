@@ -10,6 +10,7 @@ import {
     getUserById,
     updateUser,
     forgotPassword,
+    verifyOtp,
     resetPassword,
     toggleWishlist,
     getWishlist,
@@ -21,7 +22,6 @@ import {
     validateRegister,
     validateLogin,
     validateForgotPassword,
-    validateResetPassword,
     validateUpdateProfile,
 } from '../middleware/validateMiddleware.js';
 
@@ -31,7 +31,8 @@ router.route('/')
 
 router.post('/login', loginLimiter, validateLogin, validate, authUser);
 router.post('/forgotpassword', forgotPasswordLimiter, validateForgotPassword, validate, forgotPassword);
-router.put('/resetpassword/:token', validateResetPassword, validate, resetPassword);
+router.post('/verifyotp', verifyOtp);
+router.put('/resetpassword', resetPassword);
 
 router.route('/profile')
     .get(protect, getUserProfile)

@@ -2,7 +2,7 @@ import asyncHandler from 'express-async-handler';
 import crypto from 'crypto';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
-import { sendPasswordResetEmail } from '../utils/sendEmail.js';
+import { sendOtpEmail } from '../utils/sendEmail.js';
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
@@ -189,7 +189,7 @@ const updateUser = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc    Forgot password — send reset email
+// @desc    Forgot password — send OTP to email
 // @route   POST /api/users/forgotpassword
 // @access  Public
 const forgotPassword = asyncHandler(async (req, res) => {
@@ -198,35 +198,29 @@ const forgotPassword = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
         // Don't reveal whether email exists — security best practice
-        res.json({ message: 'If that email exists, a reset link has been sent.' });
+        res.json({ message: 'If that email exists, an OTP has been sent.' });
         return;
     }
 
-    // Generate reset token
-    const rawToken = crypto.randomBytes(32).toString('hex');
-    const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+    // Generate 6-digit OTP
+    const rawOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    const hashedOtp = crypto.createHash('sha256').update(rawOtp).digest('hex');
 
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpire = new Date(Date.now() + 15 * 60 * 1000); // 15 min
+    user.otpCode = hashedOtp;
+    user.otpExpire = new Date(Date.now() + 10 * 60 * 1000); // 10 min
+    user.otpSession = undefined; // clear any old session
     await user.save({ validateBeforeSave: false });
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5000';
-    // On Vercel the frontend is served at root (/reset-password.html)
-    // On local dev it's served under /frontend/reset-password.html
-    const isLocal = !process.env.FRONTEND_URL || process.env.FRONTEND_URL.includes('localhost');
-    const resetPath = isLocal ? '/frontend/reset-password.html' : '/reset-password.html';
-    const resetUrl = `${frontendUrl}${resetPath}?token=${rawToken}`;
-
     try {
-        await sendPasswordResetEmail(user.email, user.name, resetUrl);
-        res.json({ 
-            message: 'Password reset email sent.',
-            ...(process.env.NODE_ENV === 'development' && { resetUrl })
+        await sendOtpEmail(user.email, user.name, rawOtp);
+        res.json({
+            message: 'OTP sent to your email address.',
+            ...(process.env.NODE_ENV === 'development' && { otp: rawOtp }),
         });
     } catch (emailErr) {
-        // Clean up token if email fails
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
+        // Clean up OTP if email fails
+        user.otpCode = undefined;
+        user.otpExpire = undefined;
         await user.save({ validateBeforeSave: false });
         console.error('Email send error:', emailErr.message);
         res.status(500);
@@ -234,33 +228,77 @@ const forgotPassword = asyncHandler(async (req, res) => {
     }
 });
 
-// @desc    Reset password using token
-// @route   PUT /api/users/resetpassword/:token
+// @desc    Verify OTP — returns a short-lived session token
+// @route   POST /api/users/verifyotp
+// @access  Public
+const verifyOtp = asyncHandler(async (req, res) => {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+        res.status(400);
+        throw new Error('Email and OTP are required');
+    }
+
+    const hashedOtp = crypto.createHash('sha256').update(otp.trim()).digest('hex');
+
+    const user = await User.findOne({
+        email,
+        otpCode: hashedOtp,
+        otpExpire: { $gt: Date.now() },
+    });
+
+    if (!user) {
+        res.status(400);
+        throw new Error('Invalid or expired OTP');
+    }
+
+    // OTP verified — issue a one-time session token for the reset step
+    const rawSession = crypto.randomBytes(32).toString('hex');
+    const hashedSession = crypto.createHash('sha256').update(rawSession).digest('hex');
+
+    user.otpCode = undefined;
+    user.otpExpire = undefined;
+    user.otpSession = hashedSession;
+    // reuse resetPasswordExpire for session timeout (5 min)
+    user.resetPasswordExpire = new Date(Date.now() + 5 * 60 * 1000);
+    await user.save({ validateBeforeSave: false });
+
+    res.json({ message: 'OTP verified', sessionToken: rawSession });
+});
+
+// @desc    Reset password using OTP session token
+// @route   PUT /api/users/resetpassword
 // @access  Public
 const resetPassword = asyncHandler(async (req, res) => {
-    const rawToken = req.params.token;
-    const { password } = req.body;
+    const { sessionToken, password } = req.body;
+
+    if (!sessionToken) {
+        res.status(400);
+        throw new Error('Session token is required');
+    }
 
     if (!password || password.length < 8) {
         res.status(400);
         throw new Error('Password must be at least 8 characters');
     }
 
-    // Hash the raw token to compare with stored hashed token
-    const hashedToken = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const hashedSession = crypto.createHash('sha256').update(sessionToken).digest('hex');
 
     const user = await User.findOne({
-        resetPasswordToken: hashedToken,
+        otpSession: hashedSession,
         resetPasswordExpire: { $gt: Date.now() },
     });
 
     if (!user) {
         res.status(400);
-        throw new Error('Invalid or expired password reset link');
+        throw new Error('Session expired. Please start over.');
     }
 
-    // Update password and clear reset token
+    // Update password and clear everything
     user.password = password;
+    user.otpCode = undefined;
+    user.otpExpire = undefined;
+    user.otpSession = undefined;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
@@ -324,6 +362,7 @@ export {
     getUserById,
     updateUser,
     forgotPassword,
+    verifyOtp,
     resetPassword,
     toggleWishlist,
     getWishlist,
