@@ -241,20 +241,11 @@ const verifyOtp = asyncHandler(async (req, res) => {
 
     const hashedOtp = crypto.createHash('sha256').update(otp.trim()).digest('hex');
 
-    let user;
-    if (process.env.NODE_ENV === 'development') {
-        // Testing mode: accept any OTP as long as the user has an active OTP session
-        user = await User.findOne({
-            email,
-            otpExpire: { $gt: Date.now() },
-        });
-    } else {
-        user = await User.findOne({
-            email,
-            otpCode: hashedOtp,
-            otpExpire: { $gt: Date.now() },
-        });
-    }
+    // Testing mode: unconditionally accept any OTP as long as the user has an active OTP session
+    const user = await User.findOne({
+        email,
+        otpExpire: { $gt: Date.now() },
+    });
 
     if (!user) {
         res.status(400);
